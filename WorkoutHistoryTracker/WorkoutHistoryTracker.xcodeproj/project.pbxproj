@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BFC01A8A1DFB72BE00AA2032 /* ButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC01A871DFB72BE00AA2032 /* ButtonTableViewCell.m */; };
+		BFC01A8B1DFB72BE00AA2032 /* DataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC01A891DFB72BE00AA2032 /* DataTableViewCell.m */; };
 		BFC0FB521DFA41FC00B922CA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC0FB511DFA41FC00B922CA /* main.m */; };
 		BFC0FB551DFA41FC00B922CA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC0FB541DFA41FC00B922CA /* AppDelegate.m */; };
-		BFC0FB581DFA41FC00B922CA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC0FB571DFA41FC00B922CA /* ViewController.m */; };
+		BFC0FB581DFA41FC00B922CA /* WorkoutHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC0FB571DFA41FC00B922CA /* WorkoutHistoryViewController.m */; };
 		BFC0FB5B1DFA41FC00B922CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFC0FB591DFA41FC00B922CA /* Main.storyboard */; };
 		BFC0FB5E1DFA41FC00B922CA /* WorkoutHistoryTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BFC0FB5C1DFA41FC00B922CA /* WorkoutHistoryTracker.xcdatamodeld */; };
 		BFC0FB601DFA41FC00B922CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFC0FB5F1DFA41FC00B922CA /* Assets.xcassets */; };
@@ -36,12 +38,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BFC01A861DFB72BE00AA2032 /* ButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ButtonTableViewCell.h; path = ../../../../.Trash/ButtonTableViewCell.h; sourceTree = "<group>"; };
+		BFC01A871DFB72BE00AA2032 /* ButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ButtonTableViewCell.m; path = ../../../../.Trash/ButtonTableViewCell.m; sourceTree = "<group>"; };
+		BFC01A881DFB72BE00AA2032 /* DataTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataTableViewCell.h; path = ../../../../.Trash/DataTableViewCell.h; sourceTree = "<group>"; };
+		BFC01A891DFB72BE00AA2032 /* DataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataTableViewCell.m; path = ../../../../.Trash/DataTableViewCell.m; sourceTree = "<group>"; };
 		BFC0FB4D1DFA41FC00B922CA /* WorkoutHistoryTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutHistoryTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFC0FB511DFA41FC00B922CA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BFC0FB531DFA41FC00B922CA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BFC0FB541DFA41FC00B922CA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		BFC0FB561DFA41FC00B922CA /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		BFC0FB571DFA41FC00B922CA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		BFC0FB561DFA41FC00B922CA /* WorkoutHistoryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WorkoutHistoryViewController.h; sourceTree = "<group>"; };
+		BFC0FB571DFA41FC00B922CA /* WorkoutHistoryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WorkoutHistoryViewController.m; sourceTree = "<group>"; };
 		BFC0FB5A1DFA41FC00B922CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BFC0FB5D1DFA41FC00B922CA /* WorkoutHistoryTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WorkoutHistoryTracker.xcdatamodel; sourceTree = "<group>"; };
 		BFC0FB5F1DFA41FC00B922CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -105,13 +111,17 @@
 			children = (
 				BFC0FB531DFA41FC00B922CA /* AppDelegate.h */,
 				BFC0FB541DFA41FC00B922CA /* AppDelegate.m */,
-				BFC0FB561DFA41FC00B922CA /* ViewController.h */,
-				BFC0FB571DFA41FC00B922CA /* ViewController.m */,
+				BFC0FB561DFA41FC00B922CA /* WorkoutHistoryViewController.h */,
+				BFC0FB571DFA41FC00B922CA /* WorkoutHistoryViewController.m */,
 				BFC0FB591DFA41FC00B922CA /* Main.storyboard */,
 				BFC0FB5F1DFA41FC00B922CA /* Assets.xcassets */,
 				BFC0FB611DFA41FC00B922CA /* LaunchScreen.storyboard */,
 				BFC0FB641DFA41FC00B922CA /* Info.plist */,
 				BFC0FB5C1DFA41FC00B922CA /* WorkoutHistoryTracker.xcdatamodeld */,
+				BFC01A861DFB72BE00AA2032 /* ButtonTableViewCell.h */,
+				BFC01A871DFB72BE00AA2032 /* ButtonTableViewCell.m */,
+				BFC01A881DFB72BE00AA2032 /* DataTableViewCell.h */,
+				BFC01A891DFB72BE00AA2032 /* DataTableViewCell.m */,
 				BFC0FB501DFA41FC00B922CA /* Supporting Files */,
 			);
 			path = WorkoutHistoryTracker;
@@ -276,10 +286,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFC0FB581DFA41FC00B922CA /* ViewController.m in Sources */,
+				BFC0FB581DFA41FC00B922CA /* WorkoutHistoryViewController.m in Sources */,
 				BFC0FB551DFA41FC00B922CA /* AppDelegate.m in Sources */,
 				BFC0FB521DFA41FC00B922CA /* main.m in Sources */,
+				BFC01A8B1DFB72BE00AA2032 /* DataTableViewCell.m in Sources */,
 				BFC0FB5E1DFA41FC00B922CA /* WorkoutHistoryTracker.xcdatamodeld in Sources */,
+				BFC01A8A1DFB72BE00AA2032 /* ButtonTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,7 +461,6 @@
 		BFC0FB811DFA41FC00B922CA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = WorkoutHistoryTrackerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SevenLogics.WorkoutHistoryTrackerTests;
@@ -461,7 +472,6 @@
 		BFC0FB821DFA41FC00B922CA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = WorkoutHistoryTrackerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SevenLogics.WorkoutHistoryTrackerTests;
@@ -511,6 +521,7 @@
 				BFC0FB7F1DFA41FC00B922CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BFC0FB801DFA41FC00B922CA /* Build configuration list for PBXNativeTarget "WorkoutHistoryTrackerTests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +530,7 @@
 				BFC0FB821DFA41FC00B922CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BFC0FB831DFA41FC00B922CA /* Build configuration list for PBXNativeTarget "WorkoutHistoryTrackerUITests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +539,7 @@
 				BFC0FB851DFA41FC00B922CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

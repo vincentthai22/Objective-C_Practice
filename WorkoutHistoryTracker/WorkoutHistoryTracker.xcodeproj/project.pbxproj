@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF67B8451E007FF300F4E671 /* WorkoutDayManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BF67B8441E007FF300F4E671 /* WorkoutDayManagedObject.m */; };
+		BF67B8461E0087D600F4E671 /* WorkoutDayManagedObject.h in Sources */ = {isa = PBXBuildFile; fileRef = BF67B83D1E007EB200F4E671 /* WorkoutDayManagedObject.h */; };
+		BF67B8471E0087E800F4E671 /* WorkoutHistoryViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = BFC0FB561DFA41FC00B922CA /* WorkoutHistoryViewController.h */; };
+		BF67B8481E0087EE00F4E671 /* DataTableViewCell.h in Sources */ = {isa = PBXBuildFile; fileRef = BFC01A881DFB72BE00AA2032 /* DataTableViewCell.h */; };
+		BF67B84C1E00A09500F4E671 /* WorkoutHistoryCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = BF67B84B1E00A09500F4E671 /* WorkoutHistoryCoreData.m */; };
 		BFC01A8A1DFB72BE00AA2032 /* ButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC01A871DFB72BE00AA2032 /* ButtonTableViewCell.m */; };
 		BFC01A8B1DFB72BE00AA2032 /* DataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC01A891DFB72BE00AA2032 /* DataTableViewCell.m */; };
 		BFC0FB521DFA41FC00B922CA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC0FB511DFA41FC00B922CA /* main.m */; };
@@ -38,6 +43,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BF67B83D1E007EB200F4E671 /* WorkoutDayManagedObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WorkoutDayManagedObject.h; sourceTree = "<group>"; };
+		BF67B8441E007FF300F4E671 /* WorkoutDayManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutDayManagedObject.m; sourceTree = "<group>"; };
+		BF67B8491E00A01100F4E671 /* WorkoutHistoryCoreData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WorkoutHistoryCoreData.h; sourceTree = "<group>"; };
+		BF67B84B1E00A09500F4E671 /* WorkoutHistoryCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutHistoryCoreData.m; sourceTree = "<group>"; };
 		BFC01A861DFB72BE00AA2032 /* ButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ButtonTableViewCell.h; path = ../../../../.Trash/ButtonTableViewCell.h; sourceTree = "<group>"; };
 		BFC01A871DFB72BE00AA2032 /* ButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ButtonTableViewCell.m; path = ../../../../.Trash/ButtonTableViewCell.m; sourceTree = "<group>"; };
 		BFC01A881DFB72BE00AA2032 /* DataTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataTableViewCell.h; path = ../../../../.Trash/DataTableViewCell.h; sourceTree = "<group>"; };
@@ -111,6 +120,8 @@
 			children = (
 				BFC0FB531DFA41FC00B922CA /* AppDelegate.h */,
 				BFC0FB541DFA41FC00B922CA /* AppDelegate.m */,
+				BF67B8491E00A01100F4E671 /* WorkoutHistoryCoreData.h */,
+				BF67B84B1E00A09500F4E671 /* WorkoutHistoryCoreData.m */,
 				BFC0FB561DFA41FC00B922CA /* WorkoutHistoryViewController.h */,
 				BFC0FB571DFA41FC00B922CA /* WorkoutHistoryViewController.m */,
 				BFC0FB591DFA41FC00B922CA /* Main.storyboard */,
@@ -122,6 +133,8 @@
 				BFC01A871DFB72BE00AA2032 /* ButtonTableViewCell.m */,
 				BFC01A881DFB72BE00AA2032 /* DataTableViewCell.h */,
 				BFC01A891DFB72BE00AA2032 /* DataTableViewCell.m */,
+				BF67B83D1E007EB200F4E671 /* WorkoutDayManagedObject.h */,
+				BF67B8441E007FF300F4E671 /* WorkoutDayManagedObject.m */,
 				BFC0FB501DFA41FC00B922CA /* Supporting Files */,
 			);
 			path = WorkoutHistoryTracker;
@@ -286,7 +299,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF67B84C1E00A09500F4E671 /* WorkoutHistoryCoreData.m in Sources */,
+				BF67B8481E0087EE00F4E671 /* DataTableViewCell.h in Sources */,
+				BF67B8471E0087E800F4E671 /* WorkoutHistoryViewController.h in Sources */,
+				BF67B8461E0087D600F4E671 /* WorkoutDayManagedObject.h in Sources */,
 				BFC0FB581DFA41FC00B922CA /* WorkoutHistoryViewController.m in Sources */,
+				BF67B8451E007FF300F4E671 /* WorkoutDayManagedObject.m in Sources */,
 				BFC0FB551DFA41FC00B922CA /* AppDelegate.m in Sources */,
 				BFC0FB521DFA41FC00B922CA /* main.m in Sources */,
 				BFC01A8B1DFB72BE00AA2032 /* DataTableViewCell.m in Sources */,
@@ -441,6 +459,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WorkoutHistoryTracker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SevenLogics.WorkoutHistoryTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -452,6 +471,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WorkoutHistoryTracker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SevenLogics.WorkoutHistoryTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";

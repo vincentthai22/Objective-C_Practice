@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="15G1004" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="WorkoutDay" representedClassName=".WorkoutDayManagedObject" syncable="YES">
+        <attribute name="benchPress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deadLift" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="squatPress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="weight" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="WorkoutDay" positionX="-63" positionY="-18" width="128" height="120"/>
+    </elements>
 </model>

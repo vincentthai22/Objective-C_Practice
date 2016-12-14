@@ -21,6 +21,10 @@ NSMutableArray *tableData;
 NSMutableArray * buttonData;
 NSMutableArray * workoutData;
 
+NSArray *imageArray;
+
+NSCache *imageCache;
+
 int buttonSectionIndex;
 int workoutSectionIndex;
 
@@ -35,14 +39,15 @@ NSIndexPath *_indexPath;
 BOOL *isEditingTable;
 
 - (void)viewDidLoad {
-    
+
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    workoutHistoryCoreData = [[WorkoutHistoryCoreData alloc] init];
-    workoutDay = workoutHistoryCoreData.getNewWorkoutDay;
+    imageCache = [[NSCache alloc]init];
+    workoutHistoryCoreData = [WorkoutHistoryCoreData sharedWorkoutHistoryData];
+    imageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"cartoonguy"], [UIImage imageNamed:@"deadlift"], [UIImage imageNamed:@"benchpress"], [UIImage imageNamed:@"squat"], [UIImage imageNamed:@"snatch"], nil];
     tableData = [[NSMutableArray alloc] initWithCapacity:2];
-    workoutData =  [workoutHistoryCoreData fetchRequest];
+    workoutData = [workoutHistoryCoreData fetchRequest];//[[NSMutableArray alloc] init]; //
     buttonData = [[NSMutableArray alloc]initWithObjects:@"button", nil];
     buttonSectionIndex =   tableData.count;
     [tableData insertObject:buttonData atIndex:0];
@@ -58,6 +63,7 @@ BOOL *isEditingTable;
 
 
 - (void) setUpAlertControllers {
+    
     printf("%s", "we are setting up alert controllers now\n");
     newEntryAlert = [UIAlertController alertControllerWithTitle:@"Enter a New Workout" message:@"Enter Workout Info Below" preferredStyle:UIAlertControllerStyleAlert];
     [newEntryAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
@@ -75,20 +81,33 @@ BOOL *isEditingTable;
     [newEntryAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"Squat";
     }];
+    
+    //OK button handler
     UIAlertAction* actionOK = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        if(isEditingTable)
+            workoutDay = tableData[workoutSectionIndex][_indexPath.row];
+        else
+            workoutDay = workoutHistoryCoreData.getNewWorkoutDay;
+        
+        //read textfields
         workoutDay.date = newEntryAlert.textFields.firstObject.text;
         workoutDay.weight = newEntryAlert.textFields[1].text;
         workoutDay.benchPress = newEntryAlert.textFields[2].text;
         workoutDay.deadLift = newEntryAlert.textFields[3].text;
         workoutDay.squatPress = newEntryAlert.textFields[4].text;
+        if ([workoutDay.date  isEqual: @""])
+            workoutDay.date = [NSDateFormatter localizedStringFromDate: [NSDate date]  dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterNoStyle];
         if (isEditingTable){
+            //workoutDay.icon = UIImagePNGRepresentation([[tableData[workoutSectionIndex][_indexPath.row] iconImageView] image]);
             NSArray *path = [NSArray arrayWithObject:[NSIndexPath indexPathForRow: _indexPath.row inSection:_indexPath.section]];
             tableData[workoutSectionIndex][_indexPath.row] = workoutDay;
             [[self tableView] reloadRowsAtIndexPaths:path withRowAnimation:UITableViewRowAnimationFade];
         }
-        else{
+        else { //inserting new entry
+            workoutDay.icon = UIImagePNGRepresentation(imageArray[arc4random_uniform(imageArray.count)]);
             NSArray *path = [NSArray arrayWithObject:[NSIndexPath indexPathForRow: [tableData[workoutSectionIndex] count] inSection:workoutSectionIndex]];
             [tableData[workoutSectionIndex] addObject:workoutDay];
+            [workoutHistoryCoreData insert: workoutDay];
             [[self tableView ] insertRowsAtIndexPaths:path withRowAnimation: UITableViewRowAnimationTop];
         }
         //NSArray *path = [NSArray arrayWithObject:[NSIndexPath indexPathForRow: [tableData[workoutSectionIndex] count] -1 inSection:workoutSectionIndex]];
@@ -98,10 +117,15 @@ BOOL *isEditingTable;
             textField.text = @"";
         [workoutHistoryCoreData save];
     }];
+    //end of OK button handler
+    
+    //cancel button handler.
     UIAlertAction* actionCancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         for(UITextView *textField in newEntryAlert.textFields)
             textField.text =@"";
     }];
+    //end cancel button handler
+    
     [newEntryAlert addAction:actionOK];
     [newEntryAlert addAction:actionCancel];
 }
@@ -130,6 +154,7 @@ BOOL *isEditingTable;
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    [imageCache removeAllObjects];
     // Dispose of any resources that can be recreated.
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -169,10 +194,9 @@ BOOL *isEditingTable;
             printf("%lu", (unsigned long)[tableData[workoutSectionIndex] count]);
             printf("%li", (long)indexPath.row);
             NSLog(@"%@", NSStringFromClass([workoutData class]));
-            WorkoutDayManagedObject *temp = tableData[workoutSectionIndex][indexPath.row];
-            [workoutHistoryCoreData remove : temp];
+            [workoutHistoryCoreData remove : tableData[workoutSectionIndex][indexPath.row]];
             [tableData[workoutSectionIndex] removeObjectAtIndex:indexPath.row];
-            //[workoutHistoryCoreData save];
+            [workoutHistoryCoreData save];
             NSArray *path = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]];
             [[self tableView] deleteRowsAtIndexPaths:path withRowAnimation:UITableViewRowAnimationLeft];
         }
@@ -196,38 +220,60 @@ BOOL *isEditingTable;
     return 60.0;
 }
 
--(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *cellIdentifier;
-    UITableViewCell *cell;
-    switch ((int)indexPath.section){
-        case 0 :
-            cellIdentifier = @"ButtonTableViewCell";
-            cell = (ButtonTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            printf("%s", "inside case 0");
-            if(cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-                printf("%s", "inside case 0");
-            }
-            
-            return cell;
-        case 1:
-            cellIdentifier= @"DataTableViewCell";
-            cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if(cell == nil) {
-                cell = (DataTableViewCell *) [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-            }
-            DataTableViewCell *tempCell = (DataTableViewCell*)cell;
-            workoutDay = [tableData[workoutSectionIndex] objectAtIndex: indexPath.row];
-            tempCell.weightLabel.text = workoutDay.weight;
-            tempCell.dateLabel.text = workoutDay.date;
-            tempCell.benchLabel.text = workoutDay.benchPress;
-            tempCell.deadliftLabel.text = workoutDay.deadLift;
-            tempCell.squatLabel.text = workoutDay.squatPress;
-            
-            return cell;
-    }
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return cell;
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
+    DataTableViewCell *tempCell = (DataTableViewCell*) cell;
+    
+    if (indexPath.section == workoutSectionIndex) {
+        
+        workoutDay = [tableData[workoutSectionIndex] objectAtIndex: indexPath.row];
+        tempCell.weightLabel.text = workoutDay.weight;
+        tempCell.dateLabel.text = workoutDay.date;
+        tempCell.benchLabel.text = workoutDay.benchPress;
+        tempCell.deadliftLabel.text = workoutDay.deadLift;
+        tempCell.squatLabel.text = workoutDay.squatPress;
+        
+        dispatch_async(queue, ^{
+            UIImage *image;
+          //  NSArray *path = [NSArray array]
+            if ([imageCache objectForKey:indexPath] == nil) {           // not inside cache
+                image = [UIImage imageWithData:workoutDay.icon];
+                [imageCache setObject:image forKey:indexPath];          //place into cache
+            } else { // already in cache
+                image = [imageCache objectForKey:indexPath];
+                printf("%s", "Cache accessed");
+            }
+            
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                tempCell.iconImageView.image = image;
+            });
+            
+        });
+    }
+}
+
+-(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString *cellIdentifier;
+    UITableViewCell *cell;
+    if (indexPath.section == buttonSectionIndex){
+        cellIdentifier = @"ButtonTableViewCell";
+        cell = (ButtonTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        printf("%s", "inside case 0");
+        if(cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            printf("%s", "inside case 0");
+        }
+        return cell;
+    } else {
+        cellIdentifier= @"DataTableViewCell";
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if(cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        }
+        return cell;
+    }
 }
 
 @end

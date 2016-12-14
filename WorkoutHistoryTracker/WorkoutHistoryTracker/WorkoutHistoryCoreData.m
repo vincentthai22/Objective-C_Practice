@@ -13,10 +13,10 @@
 AppDelegate *appDelegate;
 NSManagedObjectContext *managedContext;
 NSEntityDescription *entity;
-
+static WorkoutHistoryCoreData *sharedWorkoutHistoryCoreData;
 
 + (id) sharedWorkoutHistoryData {
-    static WorkoutHistoryCoreData *sharedWorkoutHistoryCoreData = nil;
+    sharedWorkoutHistoryCoreData = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedWorkoutHistoryCoreData = [[self alloc] init];
@@ -26,8 +26,8 @@ NSEntityDescription *entity;
 
 - (instancetype) init
 {
-    appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    managedContext = [[appDelegate persistentContainer] viewContext];
+    appDelegate = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+    managedContext = appDelegate.persistentContainer.viewContext;
     entity = [NSEntityDescription entityForName:@"WorkoutDay" inManagedObjectContext:managedContext];
     return self;
 }
@@ -35,12 +35,13 @@ NSEntityDescription *entity;
     NSError *error = nil;
     NSFetchRequest *request = [NSFetchRequest <WorkoutDayManagedObject *> fetchRequestWithEntityName:@"WorkoutDay"];
     
-    return (NSMutableArray *)[[managedContext executeFetchRequest:request error:&error] mutableCopy];
+    return [[managedContext executeFetchRequest:request error:&error] mutableCopy];
 }
 - (void) remove : (WorkoutDayManagedObject *) workoutDay{
     [managedContext deleteObject:workoutDay];
-    
-    [self save];
+}
+-(void) insert : (WorkoutDayManagedObject *) workoutDay{
+    [managedContext insertObject:workoutDay];
 }
 - (WorkoutDayManagedObject*) getNewWorkoutDay {
     return [[WorkoutDayManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:managedContext];

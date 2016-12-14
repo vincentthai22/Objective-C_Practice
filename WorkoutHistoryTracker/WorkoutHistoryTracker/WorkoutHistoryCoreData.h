@@ -12,8 +12,15 @@
 #import "WorkoutDayManagedObject.h"
 
 @interface WorkoutHistoryCoreData : NSObject
+@property (nonatomic, strong) id appDelegate;
+@property (nonatomic, strong) NSManagedObjectContext *managedContext;
+@property (nonatomic, strong) NSEntityDescription *entity;
+
++ (id) sharedWorkoutHistoryData;
 -(NSMutableArray*) fetchRequest;
 -(WorkoutDayManagedObject*) getNewWorkoutDay;
 -(void) remove : WorkoutDayManagedObject;
 -(void) save;
+-(void) insert : WorkoutDayManagedObject;
+
 @end

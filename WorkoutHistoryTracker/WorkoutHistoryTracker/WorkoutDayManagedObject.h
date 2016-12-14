@@ -11,12 +11,13 @@
 
 @interface WorkoutDayManagedObject : NSManagedObject
 
-+ (NSFetchRequest<WorkoutDayManagedObject *> *)fetchRequest;
++  (NSFetchRequest<WorkoutDayManagedObject *> * _Nonnull) fetchRequest;
 
 @property (nullable, nonatomic, copy) NSString *benchPress;
 @property (nullable, nonatomic, copy) NSString *date;
 @property (nullable, nonatomic, copy) NSString *deadLift;
 @property (nullable, nonatomic, copy) NSString *squatPress;
 @property (nullable, nonatomic, copy) NSString *weight;
+@property (nullable, nonatomic, copy) NSData *icon;
 
 @end

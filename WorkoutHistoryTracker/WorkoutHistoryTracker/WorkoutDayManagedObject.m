@@ -19,5 +19,7 @@
 @dynamic deadLift;
 @dynamic squatPress;
 @dynamic weight;
+@dynamic icon;
+
 
 @end

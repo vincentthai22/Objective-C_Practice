@@ -20,6 +20,6 @@
 @dynamic squatPress;
 @dynamic weight;
 @dynamic icon;
-
+@dynamic imageURL;
 
 @end

@@ -22,5 +22,5 @@
 -(void) remove : WorkoutDayManagedObject;
 -(void) save;
 -(void) insert : WorkoutDayManagedObject;
-
+-(void) removeAll;
 @end

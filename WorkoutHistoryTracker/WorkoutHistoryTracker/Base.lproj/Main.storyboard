@@ -26,11 +26,19 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QSz-Hc-aXc">
-                                            <rect key="frame" x="176" y="28" width="22" height="22"/>
+                                            <rect key="frame" x="262" y="28" width="22" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <accessibility key="accessibilityConfiguration" identifier="addButton"/>
                                             <connections>
                                                 <action selector="addButtonHandler:" destination="173-GB-k9y" eventType="touchUpInside" id="1Ib-LA-UzP"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nkK-Yf-NEl">
+                                            <rect key="frame" x="66" y="4" width="59" height="66"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="diceButton" image="dice"/>
+                                            <connections>
+                                                <action selector="diceButtonHandler:" destination="173-GB-k9y" eventType="touchUpInside" id="yfT-ui-NdS"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -69,7 +77,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="weightLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ilf-H2-h7b">
-                                            <rect key="frame" x="262" y="8" width="105" height="21"/>
+                                            <rect key="frame" x="262" y="8" width="146" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -139,4 +147,7 @@
             <point key="canvasLocation" x="208.80000000000001" y="-53.523238380809602"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="dice" width="162" height="143"/>
+    </resources>
 </document>

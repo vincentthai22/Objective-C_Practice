@@ -47,6 +47,12 @@ static WorkoutHistoryCoreData *sharedWorkoutHistoryCoreData;
     return [[WorkoutDayManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:managedContext];
 }
 
+- (void) removeAll {
+    NSArray * result = [self fetchRequest];
+    for (id basket in result)
+        [[self managedContext] deleteObject:basket];
+}
+
 - (void) save {
     NSError *error = nil;
     if ([managedContext save:&error] == false){

@@ -5,6 +5,7 @@
 //  Created by Vincent on 12/8/16.
 //  Copyright © 2016 Seven Logics. All rights reserved.
 //
+//  Current task : Thread management with large image, save URL and instead of the binary data and load the image only when necessary.
 
 #import "WorkoutHistoryViewController.h"
 #import "DataTableViewCell.h"
@@ -22,8 +23,11 @@
     
     //initiation of arrays and more.
     self.imageCache = [[NSCache alloc]init];
+    self.imageDataFromURL = [[NSData alloc] init];
     self.workoutHistoryCoreData = [WorkoutHistoryCoreData sharedWorkoutHistoryData];
-    self.imageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"cartoonguy"], [UIImage imageNamed:@"deadlift"], [UIImage imageNamed:@"benchpress"], [UIImage imageNamed:@"squat"], [UIImage imageNamed:@"snatch"], nil];
+    //self.imageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"cartoonguy"], [UIImage imageNamed:@"deadlift"], [UIImage imageNamed:@"benchpress"], [UIImage imageNamed:@"squat"], [UIImage imageNamed:@"snatch"], nil];
+    self.urlArray = [NSArray arrayWithObjects: @"http://previews.123rf.com/images/nikdoorg/nikdoorg1401/nikdoorg140100014/25118481-Bench-Press-Icon-Stock-Vector.jpg",@"http://previews.123rf.com/images/dolimac/dolimac1511/dolimac151100003/48040026-Vector-cartoon-clip-art-illustration-of-a-tough-mean-weightlifting-beast-man-mascot-with-werewolf-an-Stock-Vector.jpg",@"http://www.toonpool.com/user/6491/files/dead_lift_1646445.jpg",nil];
+    self.largeURLArray = [NSArray arrayWithObjects:@"http://spektyr.com/PrintImages/Cerulean%20Cross%203%20Large.jpg",@"http://eskipaper.com/images/large-2.jpg",@"https://upload.wikimedia.org/wikipedia/commons/3/3d/LARGE_elevation.jpg", nil];
     self.tableData = [[NSMutableArray alloc] initWithCapacity:2]; // 2-D Max.
     self.workoutData = [self.workoutHistoryCoreData fetchRequest]; //fetch data CoreData instance
     self.buttonData = [[NSMutableArray alloc]initWithObjects:@"button", nil];    //initialize with size 1 to show only one cell for the button section.
@@ -31,6 +35,8 @@
     [self.tableData insertObject:self.buttonData atIndex:0];
     self.workoutSectionIndex = self.tableData.count; //index = 1
     [self.tableData insertObject:self.workoutData atIndex:1];
+    self.queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
+    
     [self setUpAlertControllers];
     
 }
@@ -58,6 +64,11 @@
         textField.placeholder = @"Squat";
     }];
     
+    
+    self.randomizeImagesAlert = [UIAlertController alertControllerWithTitle:@"Randomize Images" message:@"Large or small sized images?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *actionLargeImages = [UIAlertAction actionWithTitle:@"Large" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        
+    }];
     //OK button handler
     UIAlertAction* actionOK = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         
@@ -84,11 +95,14 @@
             
         } else { //inserting new entry
             
-            self.workoutDay.icon = UIImagePNGRepresentation(self.imageArray[arc4random_uniform((uint32_t) self.imageArray.count)]);   //retrieve random image
+            NSString *temp = self.largeURLArray[arc4random_uniform((uint32_t)self.largeURLArray.count)];  //get random url
+            self.workoutDay.imageURL = temp;
+
             NSArray *path = [NSArray arrayWithObject:[NSIndexPath indexPathForRow: [self.tableData[self.workoutSectionIndex] count] inSection:self.workoutSectionIndex]]; //set path for insertion.
             [self.tableData[self.workoutSectionIndex] addObject:self.workoutDay];
             [self.workoutHistoryCoreData insert: self.workoutDay];
             [[self tableView ] insertRowsAtIndexPaths:path withRowAnimation: UITableViewRowAnimationTop];
+            
         }
         
         //reset boolean exp
@@ -106,7 +120,7 @@
             textField.text =@"";
     }];
     //end cancel button handler
-    
+    [self.randomizeImagesAlert addAction:actionLargeImages];
     [self.addNewEntryAlert addAction:actionOK];
     [self.addNewEntryAlert addAction:actionCancel];
 }
@@ -117,6 +131,9 @@
     self.addNewEntryAlert.title = @"Enter New Workout";
     [self presentViewController:self.addNewEntryAlert animated:true completion:nil];
 }
+- (IBAction)diceButtonHandler:(UIButton *)sender {
+    
+}
 
 /*
  *  Function: viewForHeaderInSection -- overridden function of it's superclass UITableVewController to display a view as the header of each section.
@@ -125,12 +142,12 @@
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(5, 5, 150, 50)];
     UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(130, 5, 150, 50)];
     [view setBackgroundColor: [UIColor groupTableViewBackgroundColor]];
-    switch (section) {
-        case 0:
+    
+    if(section == self.buttonSectionIndex) {
             label.text = @"New Entry";
             [view addSubview:label];
             return view;
-        case 1:
+    } else {
             label.text =  @"Workout History";
             [view addSubview:label];
             return view;
@@ -158,16 +175,17 @@
     if (indexPath.section == self.workoutSectionIndex) {
         WorkoutDayManagedObject *workDay = self.tableData[self.workoutSectionIndex][indexPath.row];
         int index = 0;
+        
         for(UITextField *textField in self.addNewEntryAlert.textFields){    //set textfields to the selected cell's data.
-            if(index == 0)
+            if(index == 0) //date textfield
                 textField.text = workDay.date;
-            else if (index == 1)
+            else if (index == 1) //weight textfield
                 textField.text = workDay.weight;
-            else if (index == 2)
+            else if (index == 2) //bench textfield
                 textField.text = workDay.benchPress;
-            else if (index == 3)
+            else if (index == 3) //deadlift textfield
                 textField.text = workDay.deadLift;
-            else
+            else                //squat textfield
                 textField.text = workDay.squatPress;
             index++;
         }
@@ -188,12 +206,13 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         if (indexPath.section == self.workoutSectionIndex) {
-            
+            [[self imageCache] removeObjectForKey:indexPath];   
             [self.workoutHistoryCoreData remove : self.tableData[self.workoutSectionIndex][indexPath.row]];
             [self.tableData[self.workoutSectionIndex] removeObjectAtIndex:indexPath.row];
             [self.workoutHistoryCoreData save];
             NSArray *path = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]];
             [[self tableView] deleteRowsAtIndexPaths:path withRowAnimation:UITableViewRowAnimationLeft];
+            
         }//end inner if
     } //end outer if.
 }
@@ -222,7 +241,7 @@
  */
 - (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
+    
     DataTableViewCell *tempCell = (DataTableViewCell*) cell;
     
     if (indexPath.section == self.workoutSectionIndex) {
@@ -234,14 +253,22 @@
         tempCell.deadliftLabel.text = self.workoutDay.deadLift;
         tempCell.squatLabel.text = self.workoutDay.squatPress;
         
-        dispatch_async(queue, ^{
+        dispatch_async(self.queue, ^{
             
             UIImage *image;
+            NSURL *url = [NSURL URLWithString: self.workoutDay.imageURL];
             
+            //self.imageDataFromURL = [NSData dataWithContentsOfURL:url];     //pull data from url
+
             if ([self.imageCache objectForKey:indexPath] == nil) {   // not inside cache
-                image = [UIImage imageWithData:self.workoutDay.icon];
-                [self.imageCache setObject:image forKey:indexPath];  //place into cache
+                
+                self.imageDataFromURL = [NSData dataWithContentsOfURL:url];//pull data from url
+                image = [UIImage imageWithData:self.imageDataFromURL];
+                if(image != nil)
+                    [self.imageCache setObject:image forKey:indexPath];  //place into cache
+                
             } else { // already in cache
+                
                 image = [self.imageCache objectForKey:indexPath];
             }
             
@@ -254,6 +281,7 @@
         }); //end of outer dispatch_async
     }
 }
+
 /*
  *  Function: cellForRowAtIndexPath -- determines what type of cell to load for each section.
  */

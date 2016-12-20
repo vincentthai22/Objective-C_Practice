@@ -18,6 +18,7 @@
 @property (nullable, nonatomic, copy) NSString *deadLift;
 @property (nullable, nonatomic, copy) NSString *squatPress;
 @property (nullable, nonatomic, copy) NSString *weight;
+@property (nullable, nonatomic, copy) NSString *imageURL;
 @property (nullable, nonatomic, copy) NSData *icon;
 
 @end
